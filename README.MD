@@ -11,4 +11,12 @@ Lightweight, Reddit-inspired app powered by a [Phoenix](https://www.phoenixframe
 - Install [Postgres](https://www.postgresql.org/download/) (I recommend using [Postgres.app](https://postgresapp.com/) on macOS)
 - Run `mix setup` to install dependencies and seed the database
 - Start the Phoenix server with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-- Now you can visit [`localhost:4000`](http://localhost:4000) from your browser
+- Now you can visit [`localhost:4000`](http://localhost:4000) from your frontend
+
+## Running the frontend
+
+- Change directory to `./web`
+- Install [Node.js](https://nodejs.org/en/download/)
+- Install dependencies with `npm install`
+- Start the frontend with `npm run dev`
+- Now you can visit [`localhost:5173`](http://localhost:5173) from your browser
