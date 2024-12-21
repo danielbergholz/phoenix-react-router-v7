@@ -5,13 +5,13 @@ defmodule Threadit.Users.User do
   schema "users" do
     field(:username, :string)
     field(:password_hash, :string, redact: true)
-    field(:password, virtual: true, redact: true)
+    field(:password, :string, virtual: true, redact: true)
 
     timestamps(type: :utc_datetime)
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def registration_changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :password])
     |> validate_required([:username, :password])
@@ -26,5 +26,22 @@ defmodule Threadit.Users.User do
       message: "at least one digit or punctuation character"
     )
     |> unique_constraint(:username)
+    |> hash_password()
+  end
+
+  defp hash_password(changeset) do
+    password = get_change(changeset, :password)
+
+    if password && changeset.valid? do
+      changeset
+      # If using Bcrypt, then further validate it is at most 72 bytes long
+      |> validate_length(:password, max: 72, count: :bytes)
+      # Hashing could be done with `Ecto.Changeset.prepare_changes/2`, but that
+      # would keep the database transaction open longer and hurt performance.
+      |> put_change(:password_hash, Bcrypt.hash_pwd_salt(password))
+      |> delete_change(:password)
+    else
+      changeset
+    end
   end
 end
