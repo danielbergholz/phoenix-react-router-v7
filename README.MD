@@ -1,6 +1,6 @@
 # Threadit
 
-Lightweight, Reddit-inspired app powered by a [Phoenix](https://www.phoenixframework.org) REST API and a [React Router v7](https://reactrouter.com) frontend.
+Phoenix + React Router v7 template setup
 
 ## Running the backend
 
